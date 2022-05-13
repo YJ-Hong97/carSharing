@@ -15,9 +15,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import DTO.CSDTO;
 import csException.LoginException;
 import dbutil.DBUtil;
+import dto.CSDTO;
 
 public class CSDAO {
 	DBUtil dbUtil = new DBUtil();
@@ -85,7 +85,7 @@ public class CSDAO {
 
 	static final String SQL_UPDATE_ZONE_ID = "update car set zone_id = null where car_id = ?";
 	//회원정보 변경하기
-	private static final String SQL_UPDATE_NAME = "upadate customer set customer_name = ? where user_id = ?";
+	private static final String SQL_UPDATE_NAME = "update customer set customer_name = ? where user_id = ?";
 	static final String SQL_UPDATE_PHONE = "update customer set phone_number = ? where user_id = ?";
 	private static final String SQL_UPDATE_ID = "update customer set user_id = ? where user_id = ?";
 	private static final String SQL_SS_UPDATE_ID = "update sharing_service set user_id = ? where user_id =?";
@@ -792,28 +792,6 @@ public class CSDAO {
 			pst.setString(2, customerId);
 			ret = pst.executeUpdate();
 			System.out.println(ret ==1? "전화번호가 변경되었습니다.":"변경에 실패했습니다.");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			dbUtil.dbClose(null, null, pst, null, conn);
-		}
-	}
-
-	public void updateId(String newId, String customerId) {
-		 conn = dbUtil.getConnection();
-		int ret= 0;
-		try {
-			pst = conn.prepareStatement(SQL_SS_UPDATE_ID);
-			pst.setString(1, newId);
-			pst.setString(2, customerId);
-			pst.executeUpdate();
-			
-			pst = conn.prepareStatement(SQL_UPDATE_ID);
-			pst.setString(1, newId);
-			pst.setString(2, customerId);
-			ret = pst.executeUpdate();
-			System.out.println(ret == 1? "아이디가 변경되었습니다.": "변경에 실패했습니다.");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

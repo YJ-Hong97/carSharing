@@ -3,7 +3,7 @@ package model;
 
 import java.util.List;
 
-import DTO.CSDTO;
+import dto.CSDTO;
 
 public class CSService {
 	CSDAO csdao = new CSDAO();
