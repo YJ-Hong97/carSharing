@@ -804,8 +804,16 @@ public class CSDAO {
 		 conn = dbUtil.getConnection();
 		int ret = 0;
 		try {
+			// 비밀번호 암호화
+			HashMap<String, String> keyMap = RSA.createKeypairAsString();
+			String publicKey = keyMap.get("publicKey");
+			String privatekey = keyMap.get("privateKey");
+			// 키 저장
+			RSA.saveKeyFair(keyMap, "./src");
+			String encryptPW = RSA.encode(newPW, publicKey);
+			
 			pst = conn.prepareStatement(SQL_UPDATE_PW);
-			pst.setString(1, newPW);
+			pst.setString(1, encryptPW);
 			pst.setString(2, customerId);
 			ret = pst.executeUpdate();
 			System.out.println(ret==1?"비밀번호가 변경되었습니다.":"변경에 실패했습니다.");
